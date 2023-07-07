@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - IncomePersonal
+  - OutcomePersonel
+  - Cleaner
+  - Fixer
+  - Dirt
+  - Broken
   layers:
   - Default
   - TransparentFX

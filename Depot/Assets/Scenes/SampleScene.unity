@@ -567,7 +567,7 @@ GameObject:
   - component: {fileID: 1511953834}
   m_Layer: 6
   m_Name: NPC
-  m_TagString: Untagged
+  m_TagString: IncomePersonal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

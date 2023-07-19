@@ -10,6 +10,16 @@ TagManager:
   - Fixer
   - Dirt
   - Broken
+  - Product
+  - Unfully Depot
+  - Full Depot
+  - goingProd
+  - DepotProd
+  - PerronProd
+  - UnfullPerron
+  - FullPerron
+  - GetProdCanva
+  - BG
   layers:
   - Default
   - TransparentFX

@@ -14,9 +14,9 @@ namespace Pathfinding
 		public LayerMask obstacleLayer;
 		public float _speed;
 
-		private Transform player;
 		private SpriteRenderer spr;
-		private GameObject bulwark;
+		public GameObject product, unfullyDepot, inDepotProd, inPeronProd, unfullyPerron;
+		public bool goingProduct = true, goingDepot = false, goingPeron = false, goingProdDepot = true;
 		void OnEnable()
 		{
 			ai = GetComponent<IAstarAI>();
@@ -41,22 +41,116 @@ namespace Pathfinding
 		void Update()
 		{
 			if (target != null && ai != null) ai.destination = target.position;
+			this.GetComponent<AIPath>().maxSpeed = _speed;
+			FindProduct();
+			FindUnfullyDepot();
+			FindInDepotProd();
+			FindUnfullyPerron();
 
 			Flip();
-			this.GetComponent<AIPath>().maxSpeed = _speed;
+			AILogic();
 		}
-		public void AILogic()
+
+		private void AILogic()
+        {
+			if (this.gameObject.tag == "IncomePersonal")
+            {
+				IncomePersonel();
+            }
+			else if (this.gameObject.tag == "OutcomePersonel")
+            {
+				OutcomePersonel();
+            }
+        }
+		private void IncomePersonel()
+        {
+			if (goingProduct && product != null)
+            {
+				target = product.transform;
+				Vector2 thisPos = new Vector2(this.transform.position.x, this.transform.position.y);
+				Vector2 prodPos = new Vector2(product.transform.position.x, product.transform.position.y);
+				float distance = Vector2.Distance(thisPos, prodPos);
+				if (distance < 0.3f)
+				{
+					product.transform.SetParent(this.gameObject.transform);
+					_speed = product.GetComponent<Product>()._productHeavy;
+					product.transform.tag = "goingProd";
+					goingProduct = false;
+					goingDepot = true;
+				}
+			}
+			if (goingDepot && unfullyDepot != null)
+            {
+
+				target = unfullyDepot.transform;
+
+				Vector2 thisPos = new Vector2(this.transform.position.x, this.transform.position.y);
+				Vector2 depotPos = new Vector2(unfullyDepot.transform.position.x, unfullyDepot.transform.position.y);
+				float distance0 = Vector2.Distance(thisPos, depotPos);
+
+				GameObject depotProd = null;
+				GameObject[] allBulwarks = GameObject.FindGameObjectsWithTag("goingProd");
+				float distanceToClosestBulwark = Mathf.Infinity;
+				foreach (GameObject currentBulwark in allBulwarks)
+				{
+					float distanceToBulwark = (currentBulwark.transform.position - this.transform.position).sqrMagnitude;
+					if (distanceToBulwark < distanceToClosestBulwark)
+					{
+						distanceToClosestBulwark = distanceToBulwark;
+						depotProd = currentBulwark;
+					}
+				}
+				if (distance0 <= 0.4f)
+				{
+
+					depotProd.transform.tag = "DepotProd";
+					depotProd.transform.SetParent(unfullyDepot.transform);
+					_speed = 2;
+					goingProduct = true;
+					goingDepot = false;
+				}
+			}
+        }
+		private void OutcomePersonel()
 		{
-			RaycastHit2D hit = Physics2D.Linecast(transform.position, player.position, obstacleLayer);
-			if (hit.collider != null)
-			{
-				target = player;
+			//go to depotprod
+			if (goingProdDepot && inDepotProd != null)
+            {
+				target = inDepotProd.transform;
+				Vector2 thisPos = new Vector2(this.transform.position.x, this.transform.position.y);
+				Vector2 inDepotPos = new Vector2(inDepotProd.transform.position.x, inDepotProd.transform.position.y);
+				float distance1 = Vector2.Distance(thisPos, inDepotPos);
+
+				if (distance1 <= 0.4f)
+				{
+
+					inDepotProd.transform.tag = "goingProd";
+					inDepotProd.transform.SetParent(this.transform);
+					goingProdDepot = false;
+					goingPeron = true;
+				}
 			}
-			else
+
+
+			//go to unfullyPerron
+			if (goingPeron && unfullyPerron != null)
 			{
-				target = null;
+				target = unfullyPerron.transform;
+				Vector2 thisPos = new Vector2(this.transform.position.x, this.transform.position.y);
+				Vector2 inDepotPos = new Vector2(unfullyPerron.transform.position.x, unfullyPerron.transform.position.y);
+				float distance2 = Vector2.Distance(thisPos, inDepotPos);
+
+				if (distance2 <= 0.4f)
+				{
+					this.transform.GetChild(0).transform.tag = "PerronProd";
+					this.transform.GetChild(0).transform.SetParent(unfullyPerron.transform);
+					goingProdDepot = true;
+					goingPeron = false;
+				}
 			}
+
 		}
+
 		private void Flip()
 		{
 			if (target != null)
@@ -66,9 +160,9 @@ namespace Pathfinding
 
 			}
 		}
-		public void FindBulwark()
+		public void FindProduct()
 		{
-			GameObject[] allBulwarks = GameObject.FindGameObjectsWithTag("Obstacle");
+			GameObject[] allBulwarks = GameObject.FindGameObjectsWithTag("Product");
 			float distanceToClosestBulwark = Mathf.Infinity;
 			foreach (GameObject currentBulwark in allBulwarks)
 			{
@@ -76,10 +170,60 @@ namespace Pathfinding
 				if (distanceToBulwark < distanceToClosestBulwark)
 				{
 					distanceToClosestBulwark = distanceToBulwark;
-					bulwark = currentBulwark;
+					product = currentBulwark;
 				}
 			}
 		}
-
+		public void FindUnfullyDepot()
+		{
+			GameObject[] allBulwarks = GameObject.FindGameObjectsWithTag("Unfully Depot");
+			float distanceToClosestBulwark = Mathf.Infinity;
+			foreach (GameObject currentBulwark in allBulwarks)
+			{
+				float distanceToBulwark = (currentBulwark.transform.position - this.transform.position).sqrMagnitude;
+				if (distanceToBulwark < distanceToClosestBulwark)
+				{
+					distanceToClosestBulwark = distanceToBulwark;
+					unfullyDepot = currentBulwark;
+				}
+			}
+			if (unfullyDepot != null)
+				if (unfullyDepot.tag != "Unfully Depot")
+					unfullyDepot = null;
+		}
+		public void FindInDepotProd()
+		{
+			GameObject[] allBulwarks = GameObject.FindGameObjectsWithTag("DepotProd");
+			float distanceToClosestBulwark = Mathf.Infinity;
+			foreach (GameObject currentBulwark in allBulwarks)
+			{
+				float distanceToBulwark = (currentBulwark.transform.position - this.transform.position).sqrMagnitude;
+				if (distanceToBulwark < distanceToClosestBulwark)
+				{
+					distanceToClosestBulwark = distanceToBulwark;
+					inDepotProd = currentBulwark;
+				}
+			}
+			if (inDepotProd != null)
+				if (inDepotProd.tag != "DepotProd")
+					inDepotProd = null;
+		}
+		public void FindUnfullyPerron()
+		{
+			GameObject[] allBulwarks = GameObject.FindGameObjectsWithTag("UnfullPerron");
+			float distanceToClosestBulwark = Mathf.Infinity;
+			foreach (GameObject currentBulwark in allBulwarks)
+			{
+				float distanceToBulwark = (currentBulwark.transform.position - this.transform.position).sqrMagnitude;
+				if (distanceToBulwark < distanceToClosestBulwark)
+				{
+					distanceToClosestBulwark = distanceToBulwark;
+					unfullyPerron = currentBulwark;
+				}
+			}
+			if (unfullyPerron != null)
+				if (unfullyPerron.tag != "UnfullPerron")
+					unfullyPerron = null;
+		}
 	}
 }

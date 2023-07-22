@@ -75,10 +75,16 @@ namespace Pathfinding
 					product.transform.SetParent(this.gameObject.transform);
 					_speed = product.GetComponent<Product>()._productHeavy;
 					product.transform.tag = "goingProd";
+					product = null;
 					goingProduct = false;
 					goingDepot = true;
 				}
 			}
+			if (product == null || unfullyDepot == null)
+            {
+				GameObject waitingArea = GameObject.Find("WaitingArea");
+				target = waitingArea.transform;
+            }
 			if (goingDepot && unfullyDepot != null)
             {
 
@@ -106,6 +112,7 @@ namespace Pathfinding
 					depotProd.transform.tag = "DepotProd";
 					depotProd.transform.SetParent(unfullyDepot.transform);
 					_speed = 2;
+					depotProd = null;
 					goingProduct = true;
 					goingDepot = false;
 				}
@@ -123,15 +130,20 @@ namespace Pathfinding
 
 				if (distance1 <= 0.4f)
 				{
-
+					_speed = inDepotProd.GetComponent<Product>()._productHeavy;
 					inDepotProd.transform.tag = "goingProd";
 					inDepotProd.transform.SetParent(this.transform);
+					inDepotProd = null;
 					goingProdDepot = false;
 					goingPeron = true;
 				}
 			}
 
-
+			if (inDepotProd == null || unfullyPerron == null)
+			{
+				GameObject waitingArea = GameObject.Find("WaitingArea");
+				target = waitingArea.transform;
+			}
 			//go to unfullyPerron
 			if (goingPeron && unfullyPerron != null)
 			{
@@ -144,6 +156,8 @@ namespace Pathfinding
 				{
 					this.transform.GetChild(0).transform.tag = "PerronProd";
 					this.transform.GetChild(0).transform.SetParent(unfullyPerron.transform);
+					_speed = 2;
+					unfullyPerron = null;
 					goingProdDepot = true;
 					goingPeron = false;
 				}

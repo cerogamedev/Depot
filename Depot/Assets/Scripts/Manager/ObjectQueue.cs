@@ -12,6 +12,7 @@ public class ObjectQueue : MonoBehaviour
     private float spacing = 2.0f;
     private int currentObjectSize = 6;
     private Button OrderButton;
+    private TMP_Dropdown _dropDown;
 
     //order prod
     public TMP_InputField prodNumber;
@@ -23,6 +24,7 @@ public class ObjectQueue : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         GetLeftBound();
         canva = GameObject.FindGameObjectWithTag("GetProdCanva");
+        _dropDown = GameObject.Find("Dropdown").GetComponent<TMP_Dropdown>();
     }
     private void Start()
     {

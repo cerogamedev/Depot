@@ -879,8 +879,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.8
-  m_fontSizeBase: 28.8
+  m_fontSize: 38
+  m_fontSizeBase: 38
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1654,16 +1654,22 @@ MonoBehaviour:
   m_ItemImage: {fileID: 0}
   m_Value: 0
   m_Options:
-    m_Options:
-    - m_Text: Option A
-      m_Image: {fileID: 0}
-    - m_Text: Option B
-      m_Image: {fileID: 0}
-    - m_Text: Option C
-      m_Image: {fileID: 0}
+    m_Options: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1629450063}
+        m_TargetAssemblyTypeName: ObjectQueue, Assembly-CSharp
+        m_MethodName: DropdownController
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &1058920507
 MonoBehaviour:
@@ -1905,7 +1911,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Option A
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2476,7 +2482,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 28}
+  m_SizeDelta: {x: 0, y: 150}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1590010181
 GameObject:
@@ -2597,6 +2603,13 @@ MonoBehaviour:
   orderObject: 0
   slideSpeed: 0.2
   prodNumber: {fileID: 0}
+  products:
+  - {fileID: 5173678623300752321, guid: 14d409ffffc4d2843a89969471eab994, type: 3}
+  - {fileID: 5173678623300752321, guid: bf24d70c032ca804fb1da6743d3d5e28, type: 3}
+  - {fileID: 5173678623300752321, guid: 088fb0004e14d854d8f1129de0a68f6a, type: 3}
+  - {fileID: 5173678623300752321, guid: f580fbb3ebdcc9249b18e375f0132e0a, type: 3}
+  - {fileID: 5173678623300752321, guid: a5b8c7d81230f7d45b57adce8324d9ae, type: 3}
+  - {fileID: 5173678623300752321, guid: 53f2f15537f90e943bb86864d23a371e, type: 3}
 --- !u!212 &1629450064
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3217,8 +3230,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 20}
+  m_AnchoredPosition: {x: 0, y: 20.608887}
+  m_SizeDelta: {x: 0, y: 61.2178}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1788867340
 MonoBehaviour:

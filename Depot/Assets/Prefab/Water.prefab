@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5173678623300752320}
   - component: {fileID: -3937135268122645265}
   m_Layer: 6
-  m_Name: Product
+  m_Name: Water
   m_TagString: Product
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.3419354, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afc8095c274ee344295e6a239f7d5f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mp: {fileID: 11400000, guid: d60cb234ceb9a3644a16822746237287, type: 2}
+  mp: {fileID: 11400000, guid: c3e75261ec6ce0b4c958745e80c1a260, type: 2}
   _happyProdIndex: 0
   _productHeavy: 0
   _createTime: 0

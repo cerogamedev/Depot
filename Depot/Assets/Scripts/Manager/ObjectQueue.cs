@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections.Generic;
+
 
 public class ObjectQueue : MonoBehaviour
 {
@@ -16,7 +18,8 @@ public class ObjectQueue : MonoBehaviour
 
     //order prod
     public TMP_InputField prodNumber;
-
+    public GameObject[] products;
+    List<string> prodList = new List<string> { };
 
     private SpriteRenderer spriteRenderer;
     private void Awake()
@@ -24,7 +27,6 @@ public class ObjectQueue : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         GetLeftBound();
         canva = GameObject.FindGameObjectWithTag("GetProdCanva");
-        _dropDown = GameObject.Find("Dropdown").GetComponent<TMP_Dropdown>();
     }
     private void Start()
     {
@@ -95,7 +97,26 @@ public class ObjectQueue : MonoBehaviour
         OrderButton.onClick.AddListener(OrderProd);
 
         prodNumber = GameObject.Find("InputField").GetComponent<TMP_InputField>();
+        _dropDown = GameObject.Find("Dropdown").GetComponent<TMP_Dropdown>();
+        for (int i = 0; i<products.Length; i++)
+        {
+            prodList.Add(products[i].name);
+        }
+        _dropDown.AddOptions(prodList);
+
     }
+
+    public void DropdownController(int index)
+    {
+        for (int j = 0; j<products.Length; j++)
+        {
+            if (j == index)
+            {
+                prefabObject = products[j];
+            }
+        }
+    }
+
     //canva voids
     public void OrderProd()
     {

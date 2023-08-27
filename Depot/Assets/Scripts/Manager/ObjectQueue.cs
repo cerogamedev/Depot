@@ -36,6 +36,7 @@ public class ObjectQueue : MonoBehaviour
             this.transform.GetChild(i).transform.position = new Vector3(leftBound + i * spacing, this.transform.position.y, 0);
         }
         canva.SetActive(false);
+        prefabObject = products[0];
     }
     private float GetLeftBound()
     {
@@ -123,7 +124,6 @@ public class ObjectQueue : MonoBehaviour
         if (orderObject == 0)
         {
             orderObject = int.Parse(prodNumber.text);
-
         }
     }
     public void IncreaseProdNumb()

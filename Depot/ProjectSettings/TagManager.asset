@@ -20,6 +20,8 @@ TagManager:
   - FullPerron
   - GetProdCanva
   - BG
+  - IncomeSheet
+  - OutcomeSheet
   layers:
   - Default
   - TransparentFX

@@ -17,6 +17,7 @@ namespace Pathfinding
 		private SpriteRenderer spr;
 		public GameObject product, unfullyDepot, inDepotProd, inPeronProd, unfullyPerron;
 		public bool goingProduct = true, goingDepot = false, goingPeron = false, goingProdDepot = true;
+		private NpcStamina _stamina;
 		void OnEnable()
 		{
 			ai = GetComponent<IAstarAI>();
@@ -30,6 +31,7 @@ namespace Pathfinding
 		{
 			spr = GetComponent<SpriteRenderer>();
 			_speed = 2;
+			_stamina = this.GetComponent<NpcStamina>();
 		}
 
 		void OnDisable()
@@ -49,7 +51,32 @@ namespace Pathfinding
 
 			Flip();
 			AILogic();
+			StaminaLogic();
 		}
+
+		private void StaminaLogic()
+        {
+
+			if (unfullyPerron != null)
+			{
+				if (target == unfullyPerron.transform)
+				{
+					_stamina.SetStamina(-5 * Time.deltaTime * (1 / _speed));
+				}
+			}
+
+			if (unfullyDepot!=null)
+            {
+				if (target == unfullyDepot.transform)
+                {
+					_stamina.SetStamina(-5 * Time.deltaTime * (1 / _speed));
+				}
+			}
+			if (_stamina.GetStamina()<=0)
+            {
+				_speed = .50f;
+            }
+        }
 
 		private void AILogic()
         {
@@ -154,8 +181,9 @@ namespace Pathfinding
 
 				if (distance2 <= 0.4f)
 				{
-					this.transform.GetChild(0).transform.tag = "PerronProd";
-					this.transform.GetChild(0).transform.SetParent(unfullyPerron.transform);
+					
+					this.transform.GetChild(1).transform.tag = "PerronProd";
+					this.transform.GetChild(1).transform.SetParent(unfullyPerron.transform);
 					_speed = 2;
 					unfullyPerron = null;
 					goingProdDepot = true;
